@@ -49,3 +49,14 @@
         transform: scale(1.2) translateX(13rem) translateY(-15rem) rotate(-15deg);
     }
 }
+
+.player-position {
+    position: absolute;
+    right: 0;
+}
+
+.btn-add {
+    position: absolute;
+    right: 3rem;
+    bottom: 3rem;
+}
