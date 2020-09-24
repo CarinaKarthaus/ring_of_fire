@@ -2,7 +2,7 @@
     width: 100vw;
     height: 100vh;
     max-width: 100%;
-    background-image: url("/assets/img/board.jpg");
+    background-image: url('../../assets/img/board.jpg');
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,12 +53,18 @@
 .player-position {
     position: absolute;
     right: 0;
+    z-index: 1;
 }
 
 .btn-add {
     position: absolute;
     right: 3rem;
     bottom: 3rem;
+
+    &:hover {
+        transform: scale(1.1);
+        background-color: #b6b4b4;
+    }
 }
 
 .pin-bottom {
