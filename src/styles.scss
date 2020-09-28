@@ -48,4 +48,12 @@ html, body { height: 100%; }
 body { margin: 0; font-family: 'Kufam', cursive !important;}
 
 
+@media (max-width: 440px) {
+  html {
+    height: unset;
+  }
+
+
+}
+
 

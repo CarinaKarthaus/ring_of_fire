@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .card-stack {
@@ -72,4 +73,51 @@
     bottom: 2rem;
     left: 10vw;
     right: 10vw;
+}
+
+@media (max-width: 440px) {
+    .card-stack {
+        img {
+            width: 8rem;
+            max-width: 40vw;
+        }
+    }
+
+    .top-card {
+       &:hover {
+            transform: unset;
+    }
+    }
+
+    .played-card {
+        transform: scale(1.1) translateX(8rem) translateY(-13rem) rotate(-15deg);
+    }
+    
+    .pick-card {
+        transform: scale(1.1) translateX(8rem) translateY(-13rem) rotate(-15deg);
+    }
+
+    @keyframes pick-card-animation {
+        0% {
+            transform: scale(1);
+        }   
+        40% {
+            transform: scale(1.2);
+        }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1.1) translateX(8rem) translateY(-13rem) rotate(-15deg);
+        }
+    }
+
+    .btn-add {
+        left: 1rem;
+        top: 1rem;
+    }
+
+ 
+
+
 }

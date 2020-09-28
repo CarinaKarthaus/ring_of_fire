@@ -29,3 +29,19 @@
         }
     }
 }
+
+@media (max-width: 440px) {
+    .start-screen {
+        img {
+            height: unset;
+            max-width: 100vw;
+        }
+    }
+
+    .start-label-box { 
+        img {
+            width: 50vw;
+        }
+
+    }
+}

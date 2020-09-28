@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-game',
@@ -14,35 +15,55 @@ export class GameComponent implements OnInit {
   game: Game;
   gameId: string;
 
-  constructor(private router: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) {}
+  topMarginForPlayerNames = 5; // In REM
+  marginBetweenNames = 8; // In REM
+
+  constructor(
+    private router: ActivatedRoute,
+    private firestore: AngularFirestore,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.newGame();
+    this.checkIfMobile();
     this.router.params.subscribe((params) => {
-      console.log(params.id);       // show game-id fetched from URL
+      console.log(params.id); // show game-id fetched from URL
       this.gameId = params.id;
-      this
-      .firestore
-      .collection('games')  // access 'games' collection in firebase
-      .doc(this.gameId)       // refer to a specific game via game-id
-      .valueChanges()
-      .subscribe((game: any) => {     // update game-object according to database
-        console.log('Game update', game); 
-        this.game.currentPlayer = game.currentPlayer;
-        this.game.playedCards = game.playedCards;
-        this.game.players = game.players;
-        this.game.stack = game.stack;
-        this.game.pickCardAnimation = game.pickCardAnimation;
-        this.game.currentCard = game.currentCard;
-      }); 
-
+      this.firestore
+        .collection('games') // access 'games' collection in firebase
+        .doc(this.gameId) // refer to a specific game via game-id
+        .valueChanges()
+        .subscribe((game: any) => {
+          // update game-object according to database
+          console.log('Game update', game);
+          this.game.currentPlayer = game.currentPlayer;
+          this.game.playedCards = game.playedCards;
+          this.game.players = game.players;
+          this.game.stack = game.stack;
+          this.game.pickCardAnimation = game.pickCardAnimation;
+          this.game.currentCard = game.currentCard;
+        });
     });
+  }
 
+  @HostListener('window:resize', ['$event'])
+  checkIfMobile() {
+    let width = window.innerWidth;
+    if (width < 440) {
+      this.marginBetweenNames = 3;
+      this.topMarginForPlayerNames = 1;
+    } else if (width < 1200) {
+      this.marginBetweenNames = 3.5;
+      this.topMarginForPlayerNames = 1;
+    } else {
+      this.topMarginForPlayerNames = 3.5;
+      this.marginBetweenNames = 6;
+    }
   }
 
   newGame() {
     this.game = new Game();
-
   }
 
   takeCard() {
@@ -52,9 +73,10 @@ export class GameComponent implements OnInit {
       // console.log('New card: ' + this.currentCard);
       // console.log('Game is: ', this.game);
       this.game.currentPlayer++;
-      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+      this.game.currentPlayer =
+        this.game.currentPlayer % this.game.players.length;
       this.saveGame();
-      
+
       setTimeout(() => {
         this.game.playedCards.push(this.game.currentCard);
         this.game.pickCardAnimation = false;
@@ -75,10 +97,9 @@ export class GameComponent implements OnInit {
   }
 
   saveGame() {
-    this
-      .firestore
-      .collection('games')  
-      .doc(this.gameId)  
-      .update(this.game.toJson())
+    this.firestore
+      .collection('games')
+      .doc(this.gameId)
+      .update(this.game.toJson());
   }
 }
