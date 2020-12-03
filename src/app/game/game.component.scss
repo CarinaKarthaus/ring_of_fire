@@ -32,7 +32,7 @@
 }
 
 .pick-card {
-    animation: pick-card-animation 1s ease-in-out;
+    animation: pick-card-animation 800ms ease-in-out;
     transform: translateX(15rem) translateY(-15rem) rotate(-15deg);
 }
 
@@ -89,8 +89,7 @@
         transform: translateX(13rem) translateY(-13rem) rotate(-15deg);
     }
     
-    .pick-card {
-        animation: pick-card-animation 1s ease-in-out;    
+    .pick-card { 
         transform: translateX(13rem) translateY(-13rem) rotate(-15deg);}
     
     @keyframes pick-card-animation {
