@@ -189,7 +189,17 @@
     }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 350px), (max-height: 400px) {
+    .btn-add {
+        width: 48px;
+        height: 48px;
+
+
+    }
+    ::ng-deep .mat-button-wrapper {
+        display: unset !important;
+        line-height: unset !important;
+    }
     .card-stack {
         img {
             width: 7rem;

@@ -31,6 +31,7 @@ export class GameComponent implements OnInit {
       this.gameId = params.id;
       this.processGameUpdates();
     });
+    this.openDialog();  // dialog to add players
   }
 
   /**
@@ -59,12 +60,15 @@ export class GameComponent implements OnInit {
     this.game.currentCard = game.currentCard;
   }
 
+  /**
+   * Set margins for player-display based on window-width & height
+   */
   @HostListener('window:resize', ['$event'])
   arrangePlayerDisplay() {
     let width = window.innerWidth;
     let height = window.innerHeight;
-    if (width < 440 || height < 600) (this.setSmallUi())
-    else if (width < 1200 || height < 800) (this.setMediumUi())
+    if (width < 450 || height < 600) (this.setSmallUi())
+    else if (width < 1200 ) (this.setMediumUi())
     else (this.setLargeUi())
 
     }
@@ -118,6 +122,9 @@ export class GameComponent implements OnInit {
     }, 1000);
   }
 
+  /**
+   * Open dialog to add player
+   */
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
@@ -136,15 +143,3 @@ export class GameComponent implements OnInit {
       .update(this.game.toJson());
   }
 }
-
-
-// checkImageCache() {
-//   // Load from cache
-//   character_image = images.find(function(img) {
-//       return img.src.endsWith(currentCharacterImg.substring(currentCharacterImg.length-10, currentCharacterImg.length));
-//   });
-//   if(!character_image) { // Image is not in cache, load from hdd
-//       character_image = new Image();
-//       character_image.src = currentCharacterImg ;
-//   }
-// }

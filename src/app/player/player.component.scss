@@ -40,7 +40,8 @@
 
 @media (max-width: 600px) {
     .player {
-        max-width: 16rem;
+        width: 14rem;
+        max-width: 75vw;
     }
 }
 
@@ -53,6 +54,7 @@
         }
         span {
             font-size: 1.4rem;
+            margin-left: 1rem;
         }
     }
 }

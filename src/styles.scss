@@ -33,6 +33,9 @@ $ringoffire-theme: mat-light-theme((
 // that you are using.
 @include angular-material-theme($ringoffire-theme);
 
+
+@import url('https://fonts.googleapis.com/css2?family=Kufam&display=swap');
+
 // Imported font-family (source: Google Fonts)
 @font-face {
   font-family: 'Kufam', cursive;
