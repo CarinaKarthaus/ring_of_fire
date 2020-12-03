@@ -2,4 +2,32 @@
     font-family: inherit;
     text-align: center;
     word-break: break-word;
+    max-width: 70vw;
+    min-width: 30vw;
 }
+
+@media (max-width: 850px) {
+    .mat-card-title {
+        font-size: 22px;
+    }
+
+    .info-box {
+        max-width: 75vw;
+    }
+}
+
+@media (max-width: 500px), (max-height: 500px) {
+    .info-box {
+        max-width: 90vw;
+    }
+    .mat-card-title {
+        font-size: 20px;
+    }
+    .mat-card-content {
+        font-size: 12px;
+    }
+    .mat-card {
+        padding: 12px;
+    }
+}
+

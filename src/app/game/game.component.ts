@@ -26,41 +26,64 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.newGame();
-    this.checkIfMobile();
+    this.arrangePlayerDisplay();
     this.router.params.subscribe((params) => {
-      console.log(params.id); // show game-id fetched from URL
       this.gameId = params.id;
-      this.firestore
+      this.processGameUpdates();
+    });
+  }
+
+  /**
+   * Subscribe to game-changes (e.g. currentPlayer, playedCards,...) in database and update local game object
+   */
+  processGameUpdates() {
+    this.firestore
         .collection('games') // access 'games' collection in firebase
         .doc(this.gameId) // refer to a specific game via game-id
         .valueChanges()
         .subscribe((game: any) => {
-          // update game-object according to database
-          console.log('Game update', game);
-          this.game.currentPlayer = game.currentPlayer;
-          this.game.playedCards = game.playedCards;
-          this.game.players = game.players;
-          this.game.stack = game.stack;
-          this.game.pickCardAnimation = game.pickCardAnimation;
-          this.game.currentCard = game.currentCard;
+          this.updateGameObject(game);
         });
-    });
+  }
+
+  /**
+   * Update game-object according to database
+   * @param game game-object containing details & status of current game
+   */
+  updateGameObject(game: any) {
+    this.game.currentPlayer = game.currentPlayer;
+    this.game.playedCards = game.playedCards;
+    this.game.players = game.players;
+    this.game.stack = game.stack;
+    this.game.pickCardAnimation = game.pickCardAnimation;
+    this.game.currentCard = game.currentCard;
   }
 
   @HostListener('window:resize', ['$event'])
-  checkIfMobile() {
+  arrangePlayerDisplay() {
     let width = window.innerWidth;
-    if (width < 440) {
-      this.marginBetweenNames = 3;
-      this.topMarginForPlayerNames = 1;
-    } else if (width < 1200) {
-      this.marginBetweenNames = 3.5;
-      this.topMarginForPlayerNames = 1;
-    } else {
-      this.topMarginForPlayerNames = 3.5;
-      this.marginBetweenNames = 6;
+    let height = window.innerHeight;
+    if (width < 440 || height < 600) (this.setSmallUi())
+    else if (width < 1200 || height < 800) (this.setMediumUi())
+    else (this.setLargeUi())
+
     }
+  
+  setSmallUi() {
+    this.marginBetweenNames = 2.75;
+    this.topMarginForPlayerNames = 0.5;
   }
+
+  setMediumUi() {
+    this.marginBetweenNames = 4.5;
+    this.topMarginForPlayerNames = 1;
+    } 
+
+  setLargeUi() {
+    this.topMarginForPlayerNames = 3.5;
+    this.marginBetweenNames = 6;
+  }
+  
 
   newGame() {
     this.game = new Game();
@@ -68,21 +91,31 @@ export class GameComponent implements OnInit {
 
   takeCard() {
     if (!this.game.pickCardAnimation) {
-      this.game.currentCard = this.game.stack.pop();
-      this.game.pickCardAnimation = true;
-      // console.log('New card: ' + this.currentCard);
-      // console.log('Game is: ', this.game);
-      this.game.currentPlayer++;
-      this.game.currentPlayer =
-        this.game.currentPlayer % this.game.players.length;
+      this.fireGameChanges();
       this.saveGame();
-
-      setTimeout(() => {
-        this.game.playedCards.push(this.game.currentCard);
-        this.game.pickCardAnimation = false;
-        this.saveGame();
-      }, 1000);
+      this.finishGameChanges();
     }
+  }
+
+  /**
+   * Kick off card-animation and update current player & card stack
+   */
+  fireGameChanges() {
+    this.game.currentCard = this.game.stack.pop();
+    this.game.pickCardAnimation = true;
+    this.game.currentPlayer++;
+    this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+  }
+
+  /**
+   * Finish card-animation, update currentCard and save game changes
+   */
+  finishGameChanges() {
+    setTimeout(() => {
+      this.game.playedCards.push(this.game.currentCard);
+      this.game.pickCardAnimation = false;
+      this.saveGame();
+    }, 1000);
   }
 
   openDialog(): void {
@@ -103,3 +136,15 @@ export class GameComponent implements OnInit {
       .update(this.game.toJson());
   }
 }
+
+
+// checkImageCache() {
+//   // Load from cache
+//   character_image = images.find(function(img) {
+//       return img.src.endsWith(currentCharacterImg.substring(currentCharacterImg.length-10, currentCharacterImg.length));
+//   });
+//   if(!character_image) { // Image is not in cache, load from hdd
+//       character_image = new Image();
+//       character_image.src = currentCharacterImg ;
+//   }
+// }

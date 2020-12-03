@@ -28,12 +28,12 @@
 
 .played-card {
     right: 2rem;
-    transform: scale(1.1) translateX(16rem) translateY(-15rem) rotate(-15deg);
+    transform: translateX(15rem) translateY(-15rem) rotate(-15deg);
 }
 
 .pick-card {
     animation: pick-card-animation 1s ease-in-out;
-    transform: scale(1.1) translateX(16rem) translateY(-15rem) rotate(-15deg);
+    transform: translateX(15rem) translateY(-15rem) rotate(-15deg);
 }
 
 @keyframes pick-card-animation {
@@ -47,7 +47,7 @@
         transform: scale(1.5);
     }
     100% {
-        transform: scale(1.1) translateX(16rem) translateY(-15rem) rotate(-15deg);
+        transform: scale(1) translateX(15rem) translateY(-15rem) rotate(-15deg);
     }
 }
 
@@ -71,15 +71,91 @@
 .pin-bottom {
     position: absolute;
     bottom: 2rem;
-    left: 10vw;
-    right: 10vw;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
 }
 
-@media (max-width: 440px) {
+@media (max-width: 1100px) {
+    .btn-add {
+        right: 1rem;
+    }
+    .card-stack img {
+        width: 10rem;
+    }
+
+    .played-card {
+        right: 2rem;    
+        transform: translateX(13rem) translateY(-13rem) rotate(-15deg);
+    }
+    
+    .pick-card {
+        animation: pick-card-animation 1s ease-in-out;    
+        transform: translateX(13rem) translateY(-13rem) rotate(-15deg);}
+    
+    @keyframes pick-card-animation {
+        0% {
+            transform: scale(1);
+        }   
+        40% {
+            transform: scale(1.5);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1) translateX(13rem) translateY(-13rem) rotate(-15deg);
+        }
+    }
+
+}
+
+@media (max-width: 850px), (max-height: 600px) {
+    .btn-add {
+        left: 1rem;
+        top: 1rem;
+        bottom: unset;
+        right: unset;
+    }
+   
+    .card-stack img {
+        width: 9rem;
+    }
+
+    .pin-bottom {
+        bottom: 1rem;
+    }
+
+    .played-card {
+        transform: translateX(15rem) translateY(-4rem) rotate(-15deg);
+    }
+    
+    .pick-card {
+        transform: translateX(15rem) translateY(-4rem) rotate(-15deg);
+    }
+    
+    @keyframes pick-card-animation {
+        0% {
+            transform: scale(1);
+        }   
+        40% {
+            transform: scale(1.3);
+        }
+        50% {
+            transform: scale(1.3);
+        }
+        100% {
+            transform: scale(1) translateX(15rem) translateY(-4rem) rotate(-15deg);
+        }
+    }
+}
+
+
+@media (max-width: 500px), (max-height: 500px) {
     .card-stack {
         img {
             width: 8rem;
-            max-width: 40vw;
+            max-width: 30vw;
         }
     }
 
@@ -90,11 +166,11 @@
     }
 
     .played-card {
-        transform: scale(1.1) translateX(8rem) translateY(-13rem) rotate(-15deg);
+        transform: translateX(12rem) translateY(-4rem) rotate(-15deg);
     }
     
     .pick-card {
-        transform: scale(1.1) translateX(8rem) translateY(-13rem) rotate(-15deg);
+        transform: translateX(12rem) translateY(-4rem) rotate(-15deg);
     }
 
     @keyframes pick-card-animation {
@@ -108,16 +184,39 @@
             transform: scale(1.2);
         }
         100% {
-            transform: scale(1.1) translateX(8rem) translateY(-13rem) rotate(-15deg);
+            transform: scale(1) translateX(12rem) translateY(-4rem) rotate(-15deg);
+        }
+    }
+}
+
+@media (max-width: 350px) {
+    .card-stack {
+        img {
+            width: 7rem;
         }
     }
 
-    .btn-add {
-        left: 1rem;
-        top: 1rem;
+    .played-card {
+        transform: translateX(9rem) translateY(-4rem) rotate(-15deg);
+    }
+    
+    .pick-card {
+        transform: translateX(9rem) translateY(-4rem) rotate(-15deg);
     }
 
- 
-
-
+    @keyframes pick-card-animation {
+        0% {
+            transform: scale(1);
+        }   
+        40% {
+            transform: scale(1.2);
+        }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: translateX(9rem) translateY(-4rem) rotate(-15deg);
+        }
+    }
 }
+
